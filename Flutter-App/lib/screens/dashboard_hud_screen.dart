@@ -21,9 +21,8 @@ class _DashboardHudScreenState extends State<DashboardHudScreen> {
   @override
   void initState() {
     super.initState();
-    // Auto-start playback if paused
-    if (!widget.telemetryService.isPlaying) {
-      widget.telemetryService.play();
+    if (!widget.telemetryService.isSensorConnected) {
+      widget.telemetryService.disconnectSensor();
     }
   }
 
@@ -31,9 +30,14 @@ class _DashboardHudScreenState extends State<DashboardHudScreen> {
   Widget build(BuildContext context) {
     return StreamBuilder<TelemetryFrame>(
       stream: widget.telemetryService.frameStream,
-      initialData: widget.telemetryService.currentFrame,
+      initialData: widget.telemetryService.isSensorConnected
+          ? widget.telemetryService.currentFrame
+          : TelemetryFrame.initial(),
       builder: (context, snapshot) {
-        final frame = snapshot.data ?? widget.telemetryService.currentFrame;
+        final frame = snapshot.data ??
+            (widget.telemetryService.isSensorConnected
+                ? widget.telemetryService.currentFrame
+                : TelemetryFrame.initial());
 
         return Scaffold(
           backgroundColor: const Color(0xFF0B0E14),
@@ -50,7 +54,7 @@ class _DashboardHudScreenState extends State<DashboardHudScreen> {
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
-                        color: const Color(0xFF00FF66).withOpacity(0.6),
+                        color: const Color(0xFF00FF66).withValues(alpha: 0.6),
                         blurRadius: 6,
                         spreadRadius: 2,
                       )
@@ -75,7 +79,8 @@ class _DashboardHudScreenState extends State<DashboardHudScreen> {
             actions: [
               Container(
                 margin: const EdgeInsets.only(right: 16),
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
                   color: const Color(0xFF1E2330),
                   borderRadius: BorderRadius.circular(12),
@@ -109,7 +114,8 @@ class _DashboardHudScreenState extends State<DashboardHudScreen> {
                 if (frame.hazardMessage.isNotEmpty) ...[
                   const SizedBox(height: 12),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 10),
                     decoration: BoxDecoration(
                       color: const Color(0x33FF3333),
                       borderRadius: BorderRadius.circular(12),
@@ -117,7 +123,8 @@ class _DashboardHudScreenState extends State<DashboardHudScreen> {
                     ),
                     child: Row(
                       children: [
-                        const Icon(Icons.warning_amber_rounded, color: Color(0xFFFF3333)),
+                        const Icon(Icons.warning_amber_rounded,
+                            color: Color(0xFFFF3333)),
                         const SizedBox(width: 10),
                         Expanded(
                           child: Text(
@@ -166,7 +173,9 @@ class _DashboardHudScreenState extends State<DashboardHudScreen> {
                         value: frame.engineLoadPct.toStringAsFixed(0),
                         unit: '%',
                         icon: Icons.offline_bolt_rounded,
-                        accentColor: frame.engineLoadPct > 75.0 ? const Color(0xFFFF3333) : const Color(0xFFFFB300),
+                        accentColor: frame.engineLoadPct > 75.0
+                            ? const Color(0xFFFF3333)
+                            : const Color(0xFFFFB300),
                       ),
                     ),
                   ],
@@ -187,7 +196,8 @@ class _DashboardHudScreenState extends State<DashboardHudScreen> {
                     Expanded(
                       child: MetricCard(
                         label: 'Road Incline',
-                        value: '${frame.roadInclineDeg > 0 ? '+' : ''}${frame.roadInclineDeg.toStringAsFixed(1)}',
+                        value:
+                            '${frame.roadInclineDeg > 0 ? '+' : ''}${frame.roadInclineDeg.toStringAsFixed(1)}',
                         unit: 'DEG',
                         icon: Icons.landscape_rounded,
                         accentColor: const Color(0xFFAB47BC),
@@ -244,11 +254,17 @@ class _DashboardHudScreenState extends State<DashboardHudScreen> {
                         children: [
                           const Text(
                             'TELEMETRY REPLAY STREAM',
-                            style: TextStyle(color: Colors.grey, fontSize: 11, fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 11,
+                                fontWeight: FontWeight.bold),
                           ),
                           Text(
                             'Frame ${widget.telemetryService.currentIndex} / ${widget.telemetryService.totalFrames}',
-                            style: const TextStyle(color: Color(0xFF00E5FF), fontSize: 11, fontFamily: 'monospace'),
+                            style: const TextStyle(
+                                color: Color(0xFF00E5FF),
+                                fontSize: 11,
+                                fontFamily: 'monospace'),
                           ),
                         ],
                       ),
@@ -257,7 +273,9 @@ class _DashboardHudScreenState extends State<DashboardHudScreen> {
                         children: [
                           IconButton(
                             icon: Icon(
-                              widget.telemetryService.isPlaying ? Icons.pause_circle_filled : Icons.play_circle_filled,
+                              widget.telemetryService.isPlaying
+                                  ? Icons.pause_circle_filled
+                                  : Icons.play_circle_filled,
                               color: const Color(0xFF00E5FF),
                               size: 36,
                             ),
@@ -272,7 +290,8 @@ class _DashboardHudScreenState extends State<DashboardHudScreen> {
                             },
                           ),
                           IconButton(
-                            icon: const Icon(Icons.restart_alt_rounded, color: Colors.grey, size: 28),
+                            icon: const Icon(Icons.restart_alt_rounded,
+                                color: Colors.grey, size: 28),
                             onPressed: () {
                               setState(() {
                                 widget.telemetryService.resetRide();
@@ -286,17 +305,24 @@ class _DashboardHudScreenState extends State<DashboardHudScreen> {
                               padding: const EdgeInsets.only(left: 6),
                               child: ChoiceChip(
                                 label: Text('${speed.toInt()}x'),
-                                selected: widget.telemetryService.playbackSpeed == speed,
+                                selected:
+                                    widget.telemetryService.playbackSpeed ==
+                                        speed,
                                 selectedColor: const Color(0xFF00E5FF),
                                 backgroundColor: const Color(0xFF1E2330),
                                 labelStyle: TextStyle(
-                                  color: widget.telemetryService.playbackSpeed == speed ? Colors.black : Colors.white70,
+                                  color:
+                                      widget.telemetryService.playbackSpeed ==
+                                              speed
+                                          ? Colors.black
+                                          : Colors.white70,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 11,
                                 ),
                                 onSelected: (_) {
                                   setState(() {
-                                    widget.telemetryService.setPlaybackSpeed(speed);
+                                    widget.telemetryService
+                                        .setPlaybackSpeed(speed);
                                   });
                                 },
                               ),

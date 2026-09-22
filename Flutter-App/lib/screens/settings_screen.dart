@@ -37,19 +37,37 @@ class _SettingsScreenState extends State<SettingsScreen> {
         children: [
           const Text(
             'HARDWARE ARCHITECTURE BRIDGE',
-            style: TextStyle(color: Colors.grey, fontSize: 12, fontWeight: FontWeight.bold, letterSpacing: 1.2),
+            style: TextStyle(
+                color: Colors.grey,
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 1.2),
           ),
           const SizedBox(height: 12),
-          _buildInfoTile('Motorcycle Platform', 'Triumph Scrambler 400x (Euro 5 6-Pin)', Icons.two_wheeler_rounded),
-          _buildInfoTile('Diagnostic Scanner', 'ELM327 v1.5 Bluetooth (SPP UUID 00001101)', Icons.bluetooth_connected_rounded),
-          _buildInfoTile('Tire Telemetry', 'BLE 5.0 External Valve Caps (Front & Rear)', Icons.tire_repair_rounded),
-          _buildInfoTile('Compute Core', 'Android Smartphone (6-Axis IMU + GNSS GPS)', Icons.phone_android_rounded),
-
+          _buildInfoTile(
+              'Motorcycle Platform',
+              'Triumph Scrambler 400x (Euro 5 6-Pin)',
+              Icons.two_wheeler_rounded),
+          _buildInfoTile(
+              'Diagnostic Scanner',
+              'ELM327 v1.5 Bluetooth (SPP UUID 00001101)',
+              Icons.bluetooth_connected_rounded),
+          _buildInfoTile(
+              'Tire Telemetry',
+              'BLE 5.0 External Valve Caps (Front & Rear)',
+              Icons.tire_repair_rounded),
+          _buildInfoTile(
+              'Compute Core',
+              'Android Smartphone (6-Axis IMU + GNSS GPS)',
+              Icons.phone_android_rounded),
           const SizedBox(height: 24),
-
           const Text(
             'DATA INGESTION MODE',
-            style: TextStyle(color: Colors.grey, fontSize: 12, fontWeight: FontWeight.bold, letterSpacing: 1.2),
+            style: TextStyle(
+                color: Colors.grey,
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 1.2),
           ),
           const SizedBox(height: 12),
           Container(
@@ -67,7 +85,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   children: [
                     Text(
                       'Replay 10,000-Row Prototype Telemetry',
-                      style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: 2),
                     Text(
@@ -78,7 +99,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
                 Switch(
                   value: _simulationMode,
-                  activeColor: const Color(0xFF00FF66),
+                  activeThumbColor: const Color(0xFF00FF66),
                   onChanged: (val) {
                     setState(() {
                       _simulationMode = val;
@@ -88,12 +109,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ],
             ),
           ),
-
           const SizedBox(height: 24),
-
           const Text(
             'EDGE AI & HYSTERESIS TUNING',
-            style: TextStyle(color: Colors.grey, fontSize: 12, fontWeight: FontWeight.bold, letterSpacing: 1.2),
+            style: TextStyle(
+                color: Colors.grey,
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 1.2),
           ),
           const SizedBox(height: 12),
           Container(
@@ -109,8 +132,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text('Hysteresis Shift Buffer', style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold)),
-                    Text('±${_hysteresisBuffer.toInt()} RPM', style: const TextStyle(color: Color(0xFF00E5FF), fontWeight: FontWeight.bold)),
+                    const Text('Hysteresis Shift Buffer',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 13,
+                            fontWeight: FontWeight.bold)),
+                    Text('±${_hysteresisBuffer.toInt()} RPM',
+                        style: const TextStyle(
+                            color: Color(0xFF00E5FF),
+                            fontWeight: FontWeight.bold)),
                   ],
                 ),
                 Slider(
@@ -133,8 +163,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text('Cold Tire Alert Limit', style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold)),
-                    Text('${_coldTireThreshold.toInt()}°C', style: const TextStyle(color: Color(0xFF00E5FF), fontWeight: FontWeight.bold)),
+                    const Text('Cold Tire Alert Limit',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 13,
+                            fontWeight: FontWeight.bold)),
+                    Text('${_coldTireThreshold.toInt()}°C',
+                        style: const TextStyle(
+                            color: Color(0xFF00E5FF),
+                            fontWeight: FontWeight.bold)),
                   ],
                 ),
                 Slider(
@@ -178,9 +215,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(label, style: const TextStyle(color: Colors.white54, fontSize: 11)),
+                Text(label,
+                    style:
+                        const TextStyle(color: Colors.white54, fontSize: 11)),
                 const SizedBox(height: 2),
-                Text(value, style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold)),
+                Text(value,
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold)),
               ],
             ),
           ),

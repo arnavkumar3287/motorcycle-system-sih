@@ -19,25 +19,53 @@ class TelemetrySimulatorService {
   bool _isPlaying = false;
   bool get isPlaying => _isPlaying;
 
+  bool _isSensorConnected = false;
+  bool get isSensorConnected => _isSensorConnected;
+
   double _playbackSpeed = 1.0;
   double get playbackSpeed => _playbackSpeed;
 
   Timer? _timer;
-  final StreamController<TelemetryFrame> _frameController = StreamController<TelemetryFrame>.broadcast();
+  final StreamController<TelemetryFrame> _frameController =
+      StreamController<TelemetryFrame>.broadcast();
   Stream<TelemetryFrame> get frameStream => _frameController.stream;
 
   final SosBlackboxService blackboxService = SosBlackboxService();
   TelemetryFrame _currentFrame = TelemetryFrame.initial();
   TelemetryFrame get currentFrame => _currentFrame;
 
-  Future<void> loadDataset({String path = 'assets/cep_telemetry_prototype_dataset.csv'}) async {
+  Future<void> loadDataset(
+      {String path = 'assets/cep_telemetry_prototype_dataset.csv'}) async {
     _generateRealisticRideFrames();
+    if (!_isSensorConnected) {
+      _currentFrame = TelemetryFrame.initial();
+      _currentIndex = 0;
+      _frameController.add(_currentFrame);
+    }
+  }
+
+  void connectSensor() {
+    _isSensorConnected = true;
+    if (_allFrames.isNotEmpty && !_isPlaying) {
+      _currentFrame = _allFrames[0];
+      _currentIndex = 0;
+      _frameController.add(_currentFrame);
+    }
+  }
+
+  void disconnectSensor() {
+    pause();
+    _isSensorConnected = false;
+    _currentFrame = TelemetryFrame.initial();
+    _currentIndex = 0;
+    _frameController.add(_currentFrame);
   }
 
   void _generateRealisticRideFrames() {
     _allFrames.clear();
-    const totalFrames = 1000; // 50 seconds at 50ms intervals (20 FPS smooth ride)
-    
+    const totalFrames =
+        1000; // 50 seconds at 50ms intervals (20 FPS smooth ride)
+
     for (int i = 0; i < totalFrames; i++) {
       final t = i * 0.05; // elapsed time in seconds
       double speed = 0.0;
@@ -265,7 +293,7 @@ class TelemetrySimulatorService {
   }
 
   void play() {
-    if (_isPlaying || _allFrames.isEmpty) return;
+    if (_isPlaying || !_isSensorConnected || _allFrames.isEmpty) return;
     _isPlaying = true;
 
     // 50ms interval = 20 FPS silky smooth continuous ride animation
@@ -355,8 +383,11 @@ class TelemetrySimulatorService {
     pause();
     _currentIndex = 0;
     _rideHistory.clear();
-    if (_allFrames.isNotEmpty) {
+    if (_allFrames.isNotEmpty && _isSensorConnected) {
       _currentFrame = _allFrames[0];
+      _frameController.add(_currentFrame);
+    } else {
+      _currentFrame = TelemetryFrame.initial();
       _frameController.add(_currentFrame);
     }
   }

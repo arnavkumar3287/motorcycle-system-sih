@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.motorcycle_system_hub"
+    namespace = "com.motorcycle.edgeaihub"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = "28.2.13676358"
 
@@ -14,7 +14,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.example.motorcycle_system_hub"
+        applicationId = "com.motorcycle.edgeaihub"
         minSdk = 24
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode

@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.motorcycle_system_hub">
+    package="com.motorcycle.edgeaihub">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- Bluetooth Classic & BLE Permissions for ELM327 & TPMS -->

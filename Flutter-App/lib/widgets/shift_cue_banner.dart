@@ -41,7 +41,7 @@ class ShiftCueBanner extends StatelessWidget {
       decoration: BoxDecoration(
         color: const Color(0xFF14171F),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: mainColor.withOpacity(0.8), width: 2),
+        border: Border.all(color: mainColor.withValues(alpha: 0.8), width: 2),
         boxShadow: [
           BoxShadow(
             color: glowColor,

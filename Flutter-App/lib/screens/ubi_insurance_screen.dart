@@ -23,17 +23,20 @@ class UbiInsuranceScreen extends StatelessWidget {
           case UbiRiskTier.safe:
             tierColor = const Color(0xFF00FF66);
             tierName = 'SAFE COMMUTER (TIER 1)';
-            tierDesc = 'Demonstrates defensive cornering, optimal shift timing, and zero cold-tire risks.';
+            tierDesc =
+                'Demonstrates defensive cornering, optimal shift timing, and zero cold-tire risks.';
             break;
           case UbiRiskTier.moderate:
             tierColor = const Color(0xFFFFB300);
             tierName = 'MODERATE RISK (TIER 2)';
-            tierDesc = 'Occasional rev violations or corner roll-ons; steady overall control.';
+            tierDesc =
+                'Occasional rev violations or corner roll-ons; steady overall control.';
             break;
           case UbiRiskTier.highRisk:
             tierColor = const Color(0xFFFF3333);
             tierName = 'HIGH RISK (TIER 3)';
-            tierDesc = 'Frequent lugging knock, high-risk overtakes, or dangerous cold-tire leans.';
+            tierDesc =
+                'Frequent lugging knock, high-risk overtakes, or dangerous cold-tire leans.';
             break;
         }
 
@@ -63,10 +66,11 @@ class UbiInsuranceScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: const Color(0xFF14171F),
                     borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: tierColor.withOpacity(0.8), width: 1.5),
+                    border: Border.all(
+                        color: tierColor.withValues(alpha: 0.8), width: 1.5),
                     boxShadow: [
                       BoxShadow(
-                        color: tierColor.withOpacity(0.15),
+                        color: tierColor.withValues(alpha: 0.15),
                         blurRadius: 18,
                         spreadRadius: 2,
                       )
@@ -79,18 +83,23 @@ class UbiInsuranceScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 4),
                             decoration: BoxDecoration(
-                              color: tierColor.withOpacity(0.15),
+                              color: tierColor.withValues(alpha: 0.15),
                               borderRadius: BorderRadius.circular(8),
                               border: Border.all(color: tierColor),
                             ),
                             child: Text(
                               tierName,
-                              style: TextStyle(color: tierColor, fontSize: 12, fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                  color: tierColor,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold),
                             ),
                           ),
-                          const Icon(Icons.verified_user_rounded, color: Colors.white70, size: 28),
+                          const Icon(Icons.verified_user_rounded,
+                              color: Colors.white70, size: 28),
                         ],
                       ),
                       const SizedBox(height: 16),
@@ -99,7 +108,9 @@ class UbiInsuranceScreen extends StatelessWidget {
                             ? '${summary.projectedDiscountPct}% PREMIUM DISCOUNT'
                             : '${summary.projectedDiscountPct.abs()}% RISK SURCHARGE',
                         style: TextStyle(
-                          color: summary.projectedDiscountPct >= 0 ? const Color(0xFF00FF66) : const Color(0xFFFF3333),
+                          color: summary.projectedDiscountPct >= 0
+                              ? const Color(0xFF00FF66)
+                              : const Color(0xFFFF3333),
                           fontSize: 28,
                           fontWeight: FontWeight.w900,
                           letterSpacing: 1.0,
@@ -108,7 +119,8 @@ class UbiInsuranceScreen extends StatelessWidget {
                       const SizedBox(height: 8),
                       Text(
                         tierDesc,
-                        style: const TextStyle(color: Colors.white70, fontSize: 13, height: 1.4),
+                        style: const TextStyle(
+                            color: Colors.white70, fontSize: 13, height: 1.4),
                       ),
                     ],
                   ),
@@ -119,36 +131,52 @@ class UbiInsuranceScreen extends StatelessWidget {
                 // 2. Underwriting Risk Metric Radar
                 const Text(
                   'TELEMETRY RISK UNDERWRITING FACTORS',
-                  style: TextStyle(color: Colors.grey, fontSize: 12, fontWeight: FontWeight.bold, letterSpacing: 1.2),
+                  style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 1.2),
                 ),
                 const SizedBox(height: 12),
 
                 _buildRiskFactorCard(
                   title: 'Cornering & Lean Grip Stability',
-                  rating: summary.coldTireHazardCount == 0 ? 'Low Risk (Score: 95/100)' : 'Warning Flagged',
-                  description: 'Measures lean angle acceleration relative to TPMS tire surface temperature.',
-                  statusColor: summary.coldTireHazardCount == 0 ? const Color(0xFF00FF66) : const Color(0xFFFF3333),
+                  rating: summary.coldTireHazardCount == 0
+                      ? 'Low Risk (Score: 95/100)'
+                      : 'Warning Flagged',
+                  description:
+                      'Measures lean angle acceleration relative to TPMS tire surface temperature.',
+                  statusColor: summary.coldTireHazardCount == 0
+                      ? const Color(0xFF00FF66)
+                      : const Color(0xFFFF3333),
                 ),
                 const SizedBox(height: 10),
                 _buildRiskFactorCard(
                   title: 'High-G Longitudinal Braking',
                   rating: 'Safe Deceleration',
-                  description: 'Checks for panic braking events (>0.65G) indicating tailgating or late anticipation.',
+                  description:
+                      'Checks for panic braking events (>0.65G) indicating tailgating or late anticipation.',
                   statusColor: const Color(0xFF00FF66),
                 ),
                 const SizedBox(height: 10),
                 _buildRiskFactorCard(
                   title: 'High-Risk Overtaking Maneuvers',
                   rating: '${summary.highRiskOvertakesCount} events detected',
-                  description: 'Tracks aggressive acceleration bursts (>0.4G) at speeds above 70 km/h.',
-                  statusColor: summary.highRiskOvertakesCount <= 2 ? const Color(0xFF00E5FF) : const Color(0xFFFF9900),
+                  description:
+                      'Tracks aggressive acceleration bursts (>0.4G) at speeds above 70 km/h.',
+                  statusColor: summary.highRiskOvertakesCount <= 2
+                      ? const Color(0xFF00E5FF)
+                      : const Color(0xFFFF9900),
                 ),
                 const SizedBox(height: 10),
                 _buildRiskFactorCard(
                   title: 'Powertrain Strain & Lugging',
                   rating: '${summary.luggingEventsCount} knock risks',
-                  description: 'Engine strain under low RPM high throttle degrades mechanical reliability.',
-                  statusColor: summary.luggingEventsCount == 0 ? const Color(0xFF00FF66) : const Color(0xFFFFB300),
+                  description:
+                      'Engine strain under low RPM high throttle degrades mechanical reliability.',
+                  statusColor: summary.luggingEventsCount == 0
+                      ? const Color(0xFF00FF66)
+                      : const Color(0xFFFFB300),
                 ),
 
                 const SizedBox(height: 24),
@@ -169,7 +197,8 @@ class UbiInsuranceScreen extends StatelessWidget {
                           color: const Color(0x2200FF66),
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        child: const Icon(Icons.savings_rounded, color: Color(0xFF00FF66), size: 30),
+                        child: const Icon(Icons.savings_rounded,
+                            color: Color(0xFF00FF66), size: 30),
                       ),
                       const SizedBox(width: 14),
                       Expanded(
@@ -178,7 +207,10 @@ class UbiInsuranceScreen extends StatelessWidget {
                           children: [
                             const Text(
                               'PROJECTED ANNUAL SAVINGS',
-                              style: TextStyle(color: Colors.white54, fontSize: 11, fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                  color: Colors.white54,
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.bold),
                             ),
                             const SizedBox(height: 2),
                             Text(
@@ -227,12 +259,18 @@ class UbiInsuranceScreen extends StatelessWidget {
               Expanded(
                 child: Text(
                   title,
-                  style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 13,
+                      fontWeight: FontWeight.bold),
                 ),
               ),
               Text(
                 rating,
-                style: TextStyle(color: statusColor, fontSize: 12, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    color: statusColor,
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold),
               ),
             ],
           ),

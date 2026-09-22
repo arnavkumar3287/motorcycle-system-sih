@@ -52,7 +52,7 @@ class PostRideAnalyticsScreen extends StatelessWidget {
                     border: Border.all(color: const Color(0xFF222938)),
                     boxShadow: [
                       BoxShadow(
-                        color: scoreColor.withOpacity(0.15),
+                        color: scoreColor.withValues(alpha: 0.15),
                         blurRadius: 20,
                         spreadRadius: 2,
                       )
@@ -80,7 +80,8 @@ class PostRideAnalyticsScreen extends StatelessWidget {
                               value: summary.overallRideScore / 100.0,
                               strokeWidth: 14,
                               backgroundColor: const Color(0xFF1E2330),
-                              valueColor: AlwaysStoppedAnimation<Color>(scoreColor),
+                              valueColor:
+                                  AlwaysStoppedAnimation<Color>(scoreColor),
                             ),
                           ),
                           Column(
@@ -96,7 +97,10 @@ class PostRideAnalyticsScreen extends StatelessWidget {
                               ),
                               const Text(
                                 '/ 100',
-                                style: TextStyle(color: Colors.grey, fontSize: 13, fontWeight: FontWeight.bold),
+                                style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.bold),
                               ),
                             ],
                           ),
@@ -127,11 +131,19 @@ class PostRideAnalyticsScreen extends StatelessWidget {
                 // 2. Score Breakdown Sub-Scores
                 Row(
                   children: [
-                    Expanded(child: _buildSubScoreCard('Shift Efficiency', summary.shiftEfficiencyScore, const Color(0xFF00FF66))),
+                    Expanded(
+                        child: _buildSubScoreCard(
+                            'Shift Efficiency',
+                            summary.shiftEfficiencyScore,
+                            const Color(0xFF00FF66))),
                     const SizedBox(width: 10),
-                    Expanded(child: _buildSubScoreCard('Safety Adherence', summary.safetyScore, const Color(0xFF00E5FF))),
+                    Expanded(
+                        child: _buildSubScoreCard('Safety Adherence',
+                            summary.safetyScore, const Color(0xFF00E5FF))),
                     const SizedBox(width: 10),
-                    Expanded(child: _buildSubScoreCard('Throttle Smoothness', summary.smoothnessScore, const Color(0xFFAB47BC))),
+                    Expanded(
+                        child: _buildSubScoreCard('Throttle Smoothness',
+                            summary.smoothnessScore, const Color(0xFFAB47BC))),
                   ],
                 ),
 
@@ -140,7 +152,11 @@ class PostRideAnalyticsScreen extends StatelessWidget {
                 // 3. Fuel & Transmission Degrading Habits Analysis
                 const Text(
                   'FUEL & TRANSMISSION DEGRADING HABITS',
-                  style: TextStyle(color: Colors.grey, fontSize: 12, fontWeight: FontWeight.bold, letterSpacing: 1.2),
+                  style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 1.2),
                 ),
                 const SizedBox(height: 12),
 
@@ -148,23 +164,31 @@ class PostRideAnalyticsScreen extends StatelessWidget {
                   title: 'Engine Lugging (<2,500 RPM @ >50% Load)',
                   count: summary.luggingEventsCount,
                   duration: '${summary.luggingDurationSec}s',
-                  severityColor: summary.luggingEventsCount > 0 ? const Color(0xFFFF3333) : const Color(0xFF00FF66),
-                  description: 'Destructive low-speed cylinder knock; downshift earlier.',
+                  severityColor: summary.luggingEventsCount > 0
+                      ? const Color(0xFFFF3333)
+                      : const Color(0xFF00FF66),
+                  description:
+                      'Destructive low-speed cylinder knock; downshift earlier.',
                 ),
                 const SizedBox(height: 10),
                 _buildHabitRow(
                   title: 'Excessive Revving (>7,500 RPM)',
                   count: summary.overRevEventsCount,
                   duration: '${summary.overRevDurationSec}s',
-                  severityColor: summary.overRevEventsCount > 0 ? const Color(0xFFFFB300) : const Color(0xFF00FF66),
-                  description: 'Exceeds optimal torque band, degrades fuel economy.',
+                  severityColor: summary.overRevEventsCount > 0
+                      ? const Color(0xFFFFB300)
+                      : const Color(0xFF00FF66),
+                  description:
+                      'Exceeds optimal torque band, degrades fuel economy.',
                 ),
                 const SizedBox(height: 10),
                 _buildHabitRow(
                   title: 'Aggressive Corner Exit Roll-On',
                   count: summary.aggressiveCornerExitCount,
                   duration: '${summary.aggressiveCornerExitCount} events',
-                  severityColor: summary.aggressiveCornerExitCount > 2 ? const Color(0xFFFF9900) : const Color(0xFF00FF66),
+                  severityColor: summary.aggressiveCornerExitCount > 2
+                      ? const Color(0xFFFF9900)
+                      : const Color(0xFF00FF66),
                   description: 'Sudden throttle roll-on at lean angles > 15°.',
                 ),
                 const SizedBox(height: 10),
@@ -172,8 +196,11 @@ class PostRideAnalyticsScreen extends StatelessWidget {
                   title: 'Cold Tire Extreme Lean Risk',
                   count: summary.coldTireHazardCount,
                   duration: '${summary.coldTireHazardCount} warnings',
-                  severityColor: summary.coldTireHazardCount > 0 ? const Color(0xFFFF3333) : const Color(0xFF00FF66),
-                  description: 'Deep lean angles (>25°) before tire reached 25°C operating temp.',
+                  severityColor: summary.coldTireHazardCount > 0
+                      ? const Color(0xFFFF3333)
+                      : const Color(0xFF00FF66),
+                  description:
+                      'Deep lean angles (>25°) before tire reached 25°C operating temp.',
                 ),
 
                 const SizedBox(height: 24),
@@ -181,7 +208,11 @@ class PostRideAnalyticsScreen extends StatelessWidget {
                 // 4. Trip Telemetry Summary
                 const Text(
                   'TELEMETRY TRIP STATISTICS',
-                  style: TextStyle(color: Colors.grey, fontSize: 12, fontWeight: FontWeight.bold, letterSpacing: 1.2),
+                  style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 1.2),
                 ),
                 const SizedBox(height: 12),
 
@@ -194,13 +225,19 @@ class PostRideAnalyticsScreen extends StatelessWidget {
                   ),
                   child: Column(
                     children: [
-                      _buildStatLine('Trip Duration', '${summary.duration.inMinutes} min ${summary.duration.inSeconds % 60} sec'),
-                      _buildStatLine('Distance Covered', '${summary.distanceKm} km'),
-                      _buildStatLine('Average Speed', '${summary.avgSpeedKmh} km/h'),
-                      _buildStatLine('Top Speed Recorded', '${summary.maxSpeedKmh} km/h'),
-                      _buildStatLine('Average Engine RPM', '${summary.avgRpm} RPM'),
+                      _buildStatLine('Trip Duration',
+                          '${summary.duration.inMinutes} min ${summary.duration.inSeconds % 60} sec'),
+                      _buildStatLine(
+                          'Distance Covered', '${summary.distanceKm} km'),
+                      _buildStatLine(
+                          'Average Speed', '${summary.avgSpeedKmh} km/h'),
+                      _buildStatLine(
+                          'Top Speed Recorded', '${summary.maxSpeedKmh} km/h'),
+                      _buildStatLine(
+                          'Average Engine RPM', '${summary.avgRpm} RPM'),
                       _buildStatLine('Peak RPM Hit', '${summary.maxRpm} RPM'),
-                      _buildStatLine('Max Lean Angle', '${summary.maxLeanAngleDeg}°'),
+                      _buildStatLine(
+                          'Max Lean Angle', '${summary.maxLeanAngleDeg}°'),
                     ],
                   ),
                 ),
@@ -225,12 +262,19 @@ class PostRideAnalyticsScreen extends StatelessWidget {
           Text(
             title,
             textAlign: TextAlign.center,
-            style: const TextStyle(color: Colors.white60, fontSize: 11, fontWeight: FontWeight.bold),
+            style: const TextStyle(
+                color: Colors.white60,
+                fontSize: 11,
+                fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 8),
           Text(
             '$score',
-            style: TextStyle(color: color, fontSize: 24, fontWeight: FontWeight.w900, fontFamily: 'monospace'),
+            style: TextStyle(
+                color: color,
+                fontSize: 24,
+                fontWeight: FontWeight.w900,
+                fontFamily: 'monospace'),
           ),
         ],
       ),
@@ -260,19 +304,25 @@ class PostRideAnalyticsScreen extends StatelessWidget {
               Expanded(
                 child: Text(
                   title,
-                  style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 13,
+                      fontWeight: FontWeight.bold),
                 ),
               ),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                 decoration: BoxDecoration(
-                  color: severityColor.withOpacity(0.15),
+                  color: severityColor.withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(8),
                   border: Border.all(color: severityColor),
                 ),
                 child: Text(
                   count > 0 ? duration : 'None',
-                  style: TextStyle(color: severityColor, fontSize: 11, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      color: severityColor,
+                      fontSize: 11,
+                      fontWeight: FontWeight.bold),
                 ),
               ),
             ],
@@ -293,8 +343,13 @@ class PostRideAnalyticsScreen extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: const TextStyle(color: Colors.white54, fontSize: 13)),
-          Text(value, style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold)),
+          Text(label,
+              style: const TextStyle(color: Colors.white54, fontSize: 13)),
+          Text(value,
+              style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 13,
+                  fontWeight: FontWeight.bold)),
         ],
       ),
     );
