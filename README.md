@@ -229,13 +229,26 @@ Motorcycle-System-main/
 │           └── java/com/example/sih/
 │               ├── MainActivity.kt            # HUD Activity with TFLite & UI Binding
 │               └── OBDConnectionManager.kt    # ELM327 Bluetooth Socket & Hex PID Parser
-└── Machine-Learning/
-    ├── cep_telemetry_prototype_dataset.csv     # 10,000-Row Synchronized Prototype Dataset
-    ├── cep_shift_model.tflite                 # Pre-trained TFLite Model
-    ├── data_preprocessing.py                  # Asynchronous Stream Preprocessor
-    ├── train_models.py                        # Multi-Model ML Training Pipeline
-    ├── adaptive_shift_rf.joblib               # Random Forest Regressor Artifact
-    ├── rider_profile_kmeans.joblib            # K-Means Profiler Artifact
-    ├── hazard_isolation_forest.joblib         # Isolation Forest Anomaly Detector
-    └── edge_intelligence_weights.json         # Quantized Mobile Edge Weights
+├── Machine-Learning/
+│   ├── cep_telemetry_prototype_dataset.csv     # 10,000-Row Synchronized Prototype Dataset
+│   ├── cep_shift_model.tflite                 # Pre-trained TFLite Model
+│   ├── data_preprocessing.py                  # Asynchronous Stream Preprocessor
+│   ├── train_models.py                        # Multi-Model ML Training Pipeline
+│   ├── adaptive_shift_rf.joblib               # Random Forest Regressor Artifact
+│   ├── rider_profile_kmeans.joblib            # K-Means Profiler Artifact
+│   ├── hazard_isolation_forest.joblib         # Isolation Forest Anomaly Detector
+│   └── edge_intelligence_weights.json         # Quantized Mobile Edge Weights
+└── APK/
+    ├── motorcycle-system-flutter-release.apk  # Flutter App Production Release APK (~45MB)
+    ├── motorcycle-system-native-android-debug.apk # Native Android Kotlin Debug APK (~15MB)
+    └── README.md                              # APK Installation & Permissions Guide
 ```
+
+---
+
+## 9. Pre-built APK Packages
+
+Direct download links in repository:
+* 📲 **[Flutter App Release APK](file:///APK/motorcycle-system-flutter-release.apk)**: Complete production build with HUD dashboard, telemetry, predictive maintenance, and UBI insurance.
+* 📲 **[Native Android Kotlin Debug APK](file:///APK/motorcycle-system-native-android-debug.apk)**: Native client with raw Bluetooth ELM327 OBD-II protocol handler and TFLite model.
+
