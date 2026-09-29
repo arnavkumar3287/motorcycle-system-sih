@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_dashboard_gradient"
+    android:fillViewport="true"
+    tools:context=".RideSummaryActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:paddingTop="36dp"
+        android:paddingBottom="36dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="POST-RIDE TELEMETRY REPORT"
+            android:textColor="#00E5FF"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.1"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="RIDE EFFICIENCY SCORE"
+            android:textColor="#F8FAFC"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="32dp" />
+
+        <!-- Circular Score Ring -->
+        <FrameLayout
+            android:layout_width="190dp"
+            android:layout_height="190dp"
+            android:background="@drawable/bg_score_circle"
+            android:layout_marginBottom="32dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtFinalScore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="100"
+                    android:textColor="#00FF88"
+                    android:textSize="74sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="OUT OF 100"
+                    android:textColor="#64748B"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.08" />
+            </LinearLayout>
+        </FrameLayout>
+
+        <!-- AI Coach Feedback Card -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_card_glass"
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:layout_marginBottom="36dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="💡 AI RIDER COACH FEEDBACK"
+                android:textColor="#94A3B8"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.08"
+                android:layout_marginBottom="12dp" />
+
+            <TextView
+                android:id="@+id/txtFeedback"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#E2E8F0"
+                android:textSize="15sp"
+                android:lineSpacingExtra="6dp"
+                android:text="Analyzing transmission efficiency, engine load, and cornering stability..." />
+        </LinearLayout>
+
+        <!-- Finish Button -->
+        <Button
+            android:id="@+id/btnDone"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:background="@drawable/bg_button_gradient"
+            android:text="COMPLETE &amp; RETURN TO COCKPIT"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.06" />
+    </LinearLayout>
+</ScrollView>

@@ -19,8 +19,6 @@ local.properties
 captures/
 *.apk
 *.aab
-!APK/*.apk
-!APK/**
 
 # Web & Node
 **/node_modules/
